@@ -1,12 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, View  } from 'react-native';
+import { Text, View, ActivityIndicator } from 'react-native';
+import { fetchData } from './fetchData';
+import { Suspense, startTransition } from 'react';
 
-export default function App() { 
-  
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Open up App.js to start working on your app!</Text>
+
+const apiData = fetchData("https://pokeapi.co/api/v2/generation/");
+const data = apiData.read();
+console.log(data.name);
+export default function App() {
+  startTransition(() => {
+    
+    return (
+      <View >
+        <Suspense fallback={<ActivityIndicator />}>
+          <Text>{data.results}</Text>
+        </Suspense>
+
       <StatusBar style="auto" />
-    </View>
-  );
+  </View>
+);
+});
 }
