@@ -26,6 +26,10 @@ function getSuspender(promise) {
 export function fetchData(url) {
   const promise = fetch(url)
     .then((response) => response.json())
-    .then((data) => data);
+    .then((data) => {
+      console.log("Datos de la API:", data); //para depurar
+      return data;
+    });
   return getSuspender(promise);
 }
+
