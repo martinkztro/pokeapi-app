@@ -1,6 +1,7 @@
 import { StatusBar, ScrollView, View, SafeAreaView } from "react-native";
 import { Header } from "./components/Header";
 import { Home } from "./screens/Home";
+import { Generation } from "./screens/Generation";
 
 export default function App() {
 
@@ -9,7 +10,7 @@ export default function App() {
         <ScrollView>
 
           <Header />
-          <Home />
+          <Generation />
 
           <StatusBar style="auto" />
         </ScrollView>

@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, FlatList, ScrollView } from "react-native";
+import { Text, View, StyleSheet, FlatList, ScrollView, TouchableNativeFeedback } from "react-native";
 import { useFetch } from "../hooks/useFetch";
 
 export function Home() {
@@ -10,7 +10,9 @@ export function Home() {
             <View style={Styles.generationContainer}>
                 {data &&
                     data.results.map((generation) => (
-                        <Text style={Styles.card} key={generation.url}>{generation.name}</Text>
+                        <TouchableNativeFeedback onPress={() => {console.log("PRESSED")}}>
+                            <Text style={Styles.card} key={generation.id}>{generation.name}</Text>
+                        </TouchableNativeFeedback>
                     ))}
             </View>
         </View>
@@ -32,17 +34,20 @@ const Styles = StyleSheet.create({
         flexWrap: "wrap",
         flexDirection: "row",
         alignItems: "center",
-        gap: 10
+        gap: 10,
+        marginBottom: 20
     },
     card: {
         width: 180,
         height: 120,
-        backgroundColor: "red",
+        backgroundColor: "#cc0000",
+        borderColor: "#3b4cca",
+        borderWidth: 1,
         color: "white",
         textAlign: "center",
         borderRadius: 10,
-        paddingTop: 40,
-        fontSize: 23,
+        paddingTop: 45,
+        fontSize: 20,
         fontWeight: "bold"
     }
 
