@@ -10,6 +10,7 @@ export default function App() {
         <ScrollView>
 
           <Header />
+          <Home />
           <Generation />
 
           <StatusBar style="auto" />

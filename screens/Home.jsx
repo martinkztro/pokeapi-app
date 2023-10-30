@@ -1,8 +1,11 @@
-import { Text, View, StyleSheet, FlatList, ScrollView, TouchableNativeFeedback } from "react-native";
+import { Text, View, StyleSheet, TouchableNativeFeedback } from "react-native";
+import { useState } from "react";
 import { useFetch } from "../hooks/useFetch";
 
-export function Home() {
+function Home() {
     const { data } = useFetch("https://pokeapi.co/api/v2/generation/");
+    const [idGeneration, setIdGeneration] = useState('serote'); //quitable el nombre de serote
+    console.log(idGeneration); //quitable
 
     return (
         <View>
@@ -10,7 +13,7 @@ export function Home() {
             <View style={Styles.generationContainer}>
                 {data &&
                     data.results.map((generation) => (
-                        <TouchableNativeFeedback onPress={() => {console.log("PRESSED")}}>
+                        <TouchableNativeFeedback onPress={() => {setIdGeneration(generation.name)}}>
                             <Text style={Styles.card} key={generation.id}>{generation.name}</Text>
                         </TouchableNativeFeedback>
                     ))}
@@ -19,6 +22,7 @@ export function Home() {
     )
 }
 
+export { Home }
 
 const Styles = StyleSheet.create({
 
