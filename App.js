@@ -1,23 +1,28 @@
-import { StatusBar } from "expo-status-bar";
-import { Text, View, ActivityIndicator, StyleSheet, ScrollView } from "react-native";
-import { fetchData } from "./fetchData";
+import { StatusBar, ScrollView, View, SafeAreaView } from "react-native";
 import { Header } from "./components/Header";
-import { Home } from "./screens/Home";
-import { Generation } from "./screens/Generation";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Home from "./components/Home";
+import Generation from "./components/Generation";
+import MainStack from "./MainStack";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-
-    return (
-      <SafeAreaView>
-        <ScrollView>
-
-          <Header />
-          <Home />
-          <Generation />
-
-          <StatusBar style="auto" />
-        </ScrollView>
-      </SafeAreaView>
-    );
+  return (
+    <>
+      <Header />
+      <NavigationContainer backgroundColor="#fff">
+        <Stack.Navigator initialRouteName="Home"
+          screenOptions={{
+            headerShown: false
+          }}
+          >
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Generation" component={Generation} />
+        </Stack.Navigator>
+      </NavigationContainer>
+      <StatusBar style="auto" />
+    </>
+  );
 }
-
