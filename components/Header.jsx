@@ -1,5 +1,5 @@
-import { Button, ImageBackground, TouchableNativeFeedback } from "react-native";
-import { Text, View, StyleSheet, TextInput, Image } from "react-native";
+import { ImageBackground, TouchableNativeFeedback } from "react-native";
+import { Text, View, StyleSheet, TextInput } from "react-native";
 
 export function Header() {
 
@@ -11,7 +11,7 @@ export function Header() {
                     <ImageBackground source={require('../pokemon-logo.png')} style={{ width: 200, height: 70 }} />
                 </View>
                 <View style={styles.searchContainer}>
-                    <TextInput style={styles.search} placeholder="Busca tu Pokemon"></TextInput>
+                    <TextInput style={styles.search} placeholder="Busca tu Pokemon" placeholderTextColor="gray"></TextInput>
                     <TouchableNativeFeedback>
                         <Text style={styles.buttonSearch}>Buscar</Text>
                     </TouchableNativeFeedback>
@@ -27,8 +27,16 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         width: "100%",
-        padding: 15,
-        backgroundColor: "#cc0000",
+        padding: 20,
+        backgroundColor: "#22303c",
+        shadowColor: "black",
+        shadowOffset: {
+            width: 20,
+            height: 10,
+        },
+        shadowOpacity: 10,
+        shadowRadius: 12,
+        elevation: 20,
     },
     headerInfo: {
         display: "flex",
@@ -47,21 +55,23 @@ const styles = StyleSheet.create({
     },
     search: {
         width: "80%",
-        borderColor: "blue",
-        borderWidth: 1,
+        color: "black",
+        fontFamily: "Roboto",
+        fontWeight: "bold",
+        backgroundColor: "#E1E8ED",
+        borderColor: "#8899a6",
+        borderWidth: .5,
         height: 40,
-        backgroundColor: "white",
         borderRadius: 20,
-        paddingLeft: 10,
+        paddingLeft: 15,
         paddingRight: 10,
     },
     buttonSearch: {
         paddingVertical: 10,
         paddingHorizontal: 20,
-        backgroundColor: "#fbd743",
-        borderColor: "blue",
-        borderWidth: 1,
-        color: "blue",
+        backgroundColor: "#c51f5d",
+        borderWidth: 2,
+        color: "whitesmoke",
         borderRadius: 20,
         display: "flex",
         justifyContent: "center",
