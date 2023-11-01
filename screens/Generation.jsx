@@ -1,44 +1,33 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  ImageBackground,
-  TouchableOpacity,
-} from "react-native";
-import { useFetch } from "../hooks/useFetch";
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from "react-native";
+import { usePokemonData } from "../hooks/useFetchPokemonList";
 
 export default function Generation({ route, navigation }) {
   const { gen } = route.params;
 
-  const { data } = useFetch(`https://pokeapi.co/api/v2/generation/${gen}`);
+  const data = usePokemonData(gen);
 
   return (
     <ScrollView style={Styles.container}>
-      <Text style={Styles.title}>{gen.replace(/tion-/, 'ción ')}</Text>
+      <Text style={Styles.title}>{gen.replace(/tion-/, "ción ")}</Text>
       <Text style={Styles.subtitle}>Selecciona un pokémon:</Text>
       <View style={Styles.listContainer}>
         {data &&
-          data.pokemon_species.map((pokemon, index) => (
-            <TouchableOpacity style={Styles.card} key={index}
+          data.map((pokemon, index) => (
+            <TouchableOpacity
+              style={Styles.card}
+              key={index}
               onPress={() =>
-                navigation.navigate("Pokemon", {
+                navigation.navigate('Pokemon', {
                   pokemon: pokemon.name,
                 })
               }
             >
               <View style={Styles.cardInfo}>
+                <Image source={{ uri: pokemon.imageUrl }} style={Styles.cardImage} />
                 <Text style={Styles.cardTitle}>{pokemon.name}</Text>
-                <Text style={Styles.cardSubtitle}>{pokemon.url}</Text>
+                <Text style={Styles.cardSubtitle}>Felicidad: {pokemon.base_happiness}</Text>
+                <Text style={Styles.cardSubtitle}>Tasa de Captura: {pokemon.capture_rate}</Text>
               </View>
-              <ImageBackground
-                source={{
-                  uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-                    index + 1
-                  }.png`,
-                }}
-                style={{ width: 150, height: 100 }}
-              />
             </TouchableOpacity>
           ))}
       </View>
@@ -97,7 +86,7 @@ const Styles = StyleSheet.create({
         borderColor: "#192734",
     },
     cardTitle: {
-        fontSize: 24,
+        fontSize: 20,
         flexWrap: "nowrap",
         fontWeight: "900",
         textAlign: "right",
@@ -114,5 +103,10 @@ const Styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         paddingVertical: 5,
+    },
+    cardImage: {
+        width: 100,
+        height: 100,
+        marginBottom: 10,
     },
 });

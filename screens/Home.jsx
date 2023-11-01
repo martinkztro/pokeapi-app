@@ -1,37 +1,31 @@
-import { Text, View, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
-import { useFetch } from "../hooks/useFetch";
+import { View, Text, ScrollView, TouchableOpacity, ImageBackground, StyleSheet } from 'react-native';
+import { useGenerationsData } from '../hooks/useFetchGenerationList';
 
 export default function Home({ navigation }) {
-  const { data } = useFetch("https://pokeapi.co/api/v2/generation/");
+  
+  const data = useGenerationsData();
 
   return (
     <ScrollView style={Styles.container}>
+      <ImageBackground source={require("../assets/bg-generation.jpg")} style={Styles.hero}>
+        <View style={Styles.blackFilterHero}></View>
+        <Text style={Styles.title}>Bienvenido</Text>
+        <Text style={Styles.subTitle}>Selecciona una generación</Text>
+      </ImageBackground>
       <View style={Styles.generationContainer}>
         {data &&
-          data.results.map((generation) => (
+          data.map((generation, index) => (
             <TouchableOpacity
-              key={generation.url}
+              key={index}
               style={Styles.card}
               onPress={() =>
                 navigation.navigate("Generation", {
-                    gen: generation.name,
+                  gen: generation.generationName,
                 })
               }
             >
-              <Text style={Styles.cardTitle}>{generation.name.replace(/tion-/,'ción')}</Text>
-              {
-                generation.name === "generation-i" ? <Text style={Styles.cardSubtitle}>1ra Generación</Text> :
-                generation.name === "generation-ii" ? <Text style={Styles.cardSubtitle}>2da Generación</Text> :
-                generation.name === "generation-iii" ? <Text style={Styles.cardSubtitle}>3ra Generación</Text> :
-                generation.name === "generation-iv" ? <Text style={Styles.cardSubtitle}>4ta Generación</Text> :
-                generation.name === "generation-v" ? <Text style={Styles.cardSubtitle}>5ta Generación</Text> :
-                generation.name === "generation-vi" ? <Text style={Styles.cardSubtitle}>6ta Generación</Text> :
-                generation.name === "generation-vii" ? <Text style={Styles.cardSubtitle}>7ma Generación</Text> :
-                generation.name === "generation-viii" ? <Text style={Styles.cardSubtitle}>8va Generación</Text> :
-                generation.name === "generation-ix" ? <Text style={Styles.cardSubtitle}>9na Generación</Text> :
-                <Text style={Styles.cardSubtitle}>Generación desconocida</Text>
-              }
-              <Text style={Styles.cardSubtitle}></Text>
+              <Text style={Styles.cardTitle}>{generation.generationName.replace(/tion-/, "ción ")}</Text>
+              <Text style={Styles.cardSubtitle}>{generation.mainRegion}</Text>
             </TouchableOpacity>
           ))}
       </View>
@@ -43,21 +37,41 @@ const Styles = StyleSheet.create({
   container: {
     backgroundColor: "#22303c",
   },
+  hero: {
+    height: 200,
+    justifyContent: "center",
+    alignItems: "center",
+
+  },
+  blackFilterHero: {
+    backgroundColor: "#22303c",
+    width: "100%",
+    height: "100%",
+    opacity: .4,
+    position: "absolute",
+    top: 0,
+    left: 0
+  },
   title: {
-    fontSize: 35,
+    fontSize: 55,
     fontWeight: "900",
     textAlign: "center",
-    marginTop: 20,
-    marginBottom: 20,
     color: "white",
+    textShadowColor: "black",
+    textShadowOffset: {width: 5, height: 5},
+    textShadowRadius: 8,
     textTransform: "uppercase",
   },
   subTitle: {
-    fontSize: 18,
-    fontWeight: "normal",
-    color: "white",
+    fontSize: 15,
+    fontWeight: "700",
     textAlign: "center",
-    marginBottom: 20,
+    color: "white",
+    textShadowColor: "black",
+    textShadowOffset: {width: 5, height: 5},
+    textShadowRadius: 8,
+    textTransform: "uppercase",
+    marginTop: 5,
   },
   generationContainer: {
     justifyContent: "center",
@@ -75,7 +89,7 @@ const Styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#192734",
     borderColor: "gray",
-    shadowColor: "red",
+    shadowColor: "gray",
     shadowOffset: {
       width: 3,
       height: 3,
